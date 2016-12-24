@@ -197,7 +197,14 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
         @Override
         public void onPropertiesChanged(Bundle properties) {
             super.onPropertiesChanged(properties);
+
             mLowBitAmbient = properties.getBoolean(PROPERTY_LOW_BIT_AMBIENT, false);
+
+            // do not use bold typefaces with burnIn-Protection enabled
+            boolean burnInProtection = properties.getBoolean(PROPERTY_BURN_IN_PROTECTION, false);
+            if (mTextPaint != null) {
+                mTextPaint.setTypeface(burnInProtection ? NORMAL_TYPEFACE : Typeface.DEFAULT_BOLD);
+            }
         }
 
         @Override
