@@ -24,7 +24,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 
-import com.example.android.sunshine.data.SunshinePreferences;
+import com.example.android.sunshine.common.data.SunshinePreferences;
 import com.example.android.sunshine.common.data.WeatherContract;
 import com.example.android.sunshine.sync.SunshineSyncUtils;
 

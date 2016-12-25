@@ -26,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.sunshine.common.utilities.SunshineDateUtils;
-import com.example.android.sunshine.utilities.SunshineWeatherUtils;
+import com.example.android.sunshine.common.utilities.SunshineWeatherUtils;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts

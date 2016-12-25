@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.data;
+package com.example.android.sunshine.common.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.android.sunshine.R;
+import com.example.android.sunshine.common.R;
 
 public final class SunshinePreferences {
 

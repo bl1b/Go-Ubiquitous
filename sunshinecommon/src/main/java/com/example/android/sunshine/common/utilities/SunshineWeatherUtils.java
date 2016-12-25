@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.sunshine.utilities;
+package com.example.android.sunshine.common.utilities;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.example.android.sunshine.R;
-import com.example.android.sunshine.data.SunshinePreferences;
+import com.example.android.sunshine.common.data.SunshinePreferences;
+
+import com.example.android.sunshine.common.R;
 
 /**
  * Contains useful utilities for a weather app, such as conversion between Celsius and Fahrenheit,

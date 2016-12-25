@@ -32,7 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.android.sunshine.data.SunshinePreferences;
+import com.example.android.sunshine.common.data.SunshinePreferences;
 import com.example.android.sunshine.common.data.WeatherContract;
 import com.example.android.sunshine.sync.SunshineSyncUtils;
 
