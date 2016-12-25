@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Sunshine Common</string>
+
+    <!-- For labelling today's forecast -->
+    <string name="today">Today</string>
+
+    <!-- For labelling tomorrow's forecast -->
+    <string name="tomorrow">Tomorrow</string>
+
+    <string name="content_authority">com.example.android.sunshine</string>
+</resources>

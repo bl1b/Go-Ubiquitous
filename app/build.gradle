@@ -5,7 +5,8 @@ android {
     buildToolsVersion toolsVersion
 
     defaultConfig {
-        applicationId "com.example.android.sunshine"
+        applicationId "com.example.android.sunshine.common"
+
         minSdkVersion 10
         targetSdkVersion 25
         versionCode 1
@@ -31,6 +32,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 
     compile 'com.firebase:firebase-jobdispatcher:0.5.0'
+
+    compile project(':sunshinecommon')
 
     wearApp project(':sunshinewatchface')
 

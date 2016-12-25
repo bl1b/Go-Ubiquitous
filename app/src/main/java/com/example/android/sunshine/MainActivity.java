@@ -33,7 +33,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.android.sunshine.data.SunshinePreferences;
-import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.common.data.WeatherContract;
 import com.example.android.sunshine.sync.SunshineSyncUtils;
 
 public class MainActivity extends AppCompatActivity implements

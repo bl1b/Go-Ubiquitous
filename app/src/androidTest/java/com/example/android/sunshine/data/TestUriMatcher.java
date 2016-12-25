@@ -19,6 +19,9 @@ import android.content.UriMatcher;
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.example.android.sunshine.common.data.WeatherContract;
+import com.example.android.sunshine.common.data.WeatherProvider;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

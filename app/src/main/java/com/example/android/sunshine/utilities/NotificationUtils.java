@@ -15,8 +15,9 @@ import android.support.v4.content.ContextCompat;
 
 import com.example.android.sunshine.DetailActivity;
 import com.example.android.sunshine.R;
+import com.example.android.sunshine.common.utilities.SunshineDateUtils;
 import com.example.android.sunshine.data.SunshinePreferences;
-import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.common.data.WeatherContract;
 
 public class NotificationUtils {
 

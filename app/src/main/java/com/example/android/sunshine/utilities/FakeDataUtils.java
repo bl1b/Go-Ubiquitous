@@ -3,13 +3,14 @@ package com.example.android.sunshine.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 
-import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.common.utilities.SunshineDateUtils;
+import com.example.android.sunshine.common.data.WeatherContract;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.example.android.sunshine.data.WeatherContract.WeatherEntry;
+import static com.example.android.sunshine.common.data.WeatherContract.WeatherEntry;
 
 public class FakeDataUtils {
 

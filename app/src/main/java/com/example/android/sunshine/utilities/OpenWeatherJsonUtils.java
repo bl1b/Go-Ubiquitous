@@ -18,8 +18,9 @@ package com.example.android.sunshine.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 
+import com.example.android.sunshine.common.utilities.SunshineDateUtils;
 import com.example.android.sunshine.data.SunshinePreferences;
-import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.common.data.WeatherContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;

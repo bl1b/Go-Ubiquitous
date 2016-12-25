@@ -29,9 +29,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.common.data.WeatherContract;
 import com.example.android.sunshine.databinding.ActivityDetailBinding;
-import com.example.android.sunshine.utilities.SunshineDateUtils;
+import com.example.android.sunshine.common.utilities.SunshineDateUtils;
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 
 public class DetailActivity extends AppCompatActivity implements
