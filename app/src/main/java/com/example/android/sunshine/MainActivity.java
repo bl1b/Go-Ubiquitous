@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements
     private int mPosition = RecyclerView.NO_POSITION;
 
     private ProgressBar mLoadingIndicator;
+    private WearableNotifier wearableNotifier;
 
 
     @Override
@@ -156,6 +157,21 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        wearableNotifier = WearableNotifier.createForCallingActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (wearableNotifier != null) {
+            wearableNotifier.disconnect();
+            wearableNotifier = null;
+        }
+    }
+
     /**
      * Uses the URI scheme for showing a location found on a map in conjunction with
      * an implicit Intent. This super-handy Intent is detailed in the "Common Intents" page of
@@ -223,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements
 
     /**
      * Called when a Loader has finished loading its data.
-     *
+     * <p>
      * NOTE: There is one small bug in this code. If no data is present in the cursor do to an
      * initial load being performed with no access to internet, the loading indicator will show
      * indefinitely, until data is present from the ContentProvider. This will be fixed in a
@@ -234,12 +250,16 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-
         mForecastAdapter.swapCursor(data);
         if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
         mRecyclerView.smoothScrollToPosition(mPosition);
-        if (data.getCount() != 0) showWeatherDataView();
+        if (data.getCount() != 0) {
+            showWeatherDataView();
+
+            if (wearableNotifier != null) {
+                wearableNotifier.notifyFromWeatherCursorData(data);
+            }
+        }
     }
 
     /**
@@ -303,10 +323,8 @@ public class MainActivity extends AppCompatActivity implements
      * This is where we inflate and set up the menu for this Activity.
      *
      * @param menu The options menu in which you place your items.
-     *
      * @return You must return true for the menu to be displayed;
-     *         if you return false it will not be shown.
-     *
+     * if you return false it will not be shown.
      * @see #onPrepareOptionsMenu
      * @see #onOptionsItemSelected
      */
@@ -324,7 +342,6 @@ public class MainActivity extends AppCompatActivity implements
      * Callback invoked when a menu item was selected from this Activity's menu.
      *
      * @param item The menu item that was selected by the user
-     *
      * @return true if you handle the menu click here, false otherwise
      */
     @Override

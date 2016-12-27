@@ -5,7 +5,7 @@ android {
     buildToolsVersion toolsVersion
 
     defaultConfig {
-        applicationId "com.example.android.sunshine.common"
+        applicationId "com.example.android.sunshine"
 
         minSdkVersion 10
         targetSdkVersion 25
@@ -28,6 +28,9 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:'.concat(supportLibVersion)
     compile 'com.android.support:preference-v7:'.concat(supportLibVersion)
+
+    compile 'com.google.android.gms:play-services-base:'.concat(playServicesVersion)
+    compile 'com.google.android.gms:play-services-wearable:'.concat(playServicesVersion)
 
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
 

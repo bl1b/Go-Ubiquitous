@@ -16,6 +16,7 @@ allprojects {
     ext {
         toolsVersion = '25.0.2'
         supportLibVersion = '25.1.0'
+        playServicesVersion = '10.0.1'
     }
 
     repositories {
