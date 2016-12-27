@@ -101,7 +101,7 @@ public class WearableNotifier implements GoogleApiClient.ConnectionCallbacks, Go
 
         // for debugging purposes add a seed so that the onChanged() method will be called every time
         map.getDataMap().putLong("seed", System.currentTimeMillis());
-
+        map = map.setUrgent();
         return map.asPutDataRequest();
     }
 
