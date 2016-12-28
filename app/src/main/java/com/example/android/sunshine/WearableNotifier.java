@@ -94,10 +94,10 @@ public class WearableNotifier implements GoogleApiClient.ConnectionCallbacks, Go
 
     private static PutDataRequest createDataRequest(final long date, final float minTemp, final float maxTemp, final int weatherId) {
         PutDataMapRequest map = PutDataMapRequest.create("/weather");
-        map.getDataMap().putLong("date", date);
-        map.getDataMap().putFloat("minTemp", minTemp);
-        map.getDataMap().putFloat("maxTemp", maxTemp);
-        map.getDataMap().putInt("weatherId", weatherId);
+        map.getDataMap().putLong(WeatherContract.WeatherEntry.COLUMN_DATE, date);
+        map.getDataMap().putFloat(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, minTemp);
+        map.getDataMap().putFloat(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, maxTemp);
+        map.getDataMap().putInt(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, weatherId);
 
         // for debugging purposes add a seed so that the onChanged() method will be called every time
         map.getDataMap().putLong("seed", System.currentTimeMillis());
