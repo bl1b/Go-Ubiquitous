@@ -14,9 +14,10 @@ buildscript {
 
 allprojects {
     ext {
+        compileVersion = 23
         toolsVersion = '25.0.2'
-        supportLibVersion = '25.1.0'
-        playServicesVersion = '10.0.1'
+        supportLibVersion = '23.4.0'
+        playServicesVersion = '8.3.0'
     }
 
     repositories {

@@ -7,7 +7,6 @@ import com.google.android.gms.wearable.DataEventBuffer;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.WearableListenerService;
-import com.google.android.gms.wearable.zzd;
 
 /**
  * Created by Jan-2 on 27.12.2016.
@@ -46,11 +45,5 @@ public class UpdateWeatherDataService extends WearableListenerService {
     public void onPeerDisconnected(Node node) {
         Log.d(TAG, "Node disconnected");
         super.onPeerDisconnected(node);
-    }
-
-    @Override
-    public void onNotificationReceived(zzd zzd) {
-        super.onNotificationReceived(zzd);
-        Log.d(TAG, "Notification received");
     }
 }
