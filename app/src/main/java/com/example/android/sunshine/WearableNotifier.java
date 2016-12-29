@@ -22,47 +22,17 @@ import com.google.android.gms.wearable.Wearable;
  * Created by Jan-2 on 27.12.2016.
  */
 
-public class WearableNotifier implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class WearableNotifier {
     private static final String TAG = LogHelper.LOG_TAG(WearableNotifier.class);
 
-    private final FragmentActivity callingActivity;
-    private GoogleApiClient apiClient;
+    private final GoogleApiClient apiClient;
 
-    public static WearableNotifier createForCallingActivity(FragmentActivity callingActivity) {
-        return new WearableNotifier(callingActivity);
+    public static WearableNotifier createWithApiClient(GoogleApiClient apiClient) {
+        return new WearableNotifier(apiClient);
     }
 
-    private WearableNotifier(FragmentActivity callingActivity) {
-        this.callingActivity = callingActivity;
-        setupAPIClient();
-    }
-
-    private void setupAPIClient() {
-        if (apiClient == null) {
-            try {
-                apiClient = new GoogleApiClient.Builder(this.callingActivity)
-                        .enableAutoManage(callingActivity, new GoogleApiClient.OnConnectionFailedListener() {
-                            @Override
-                            public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                                Log.d(TAG, "OnConnectionFailed().");
-                            }
-                        })
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .addApi(Wearable.API)
-                        .build();
-            } catch (IllegalStateException e) {
-                Log.w(TAG, "Trying to setup a new API-Client while there's still one running.", e);
-            }
-        }
-    }
-
-    public void disconnect() {
-        if (apiClient != null) {
-            apiClient.stopAutoManage(callingActivity);
-            apiClient.disconnect();
-            apiClient = null;
-        }
+    private WearableNotifier(GoogleApiClient apiClient) {
+        this.apiClient = apiClient;
     }
 
     public void notifyFromWeatherCursorData(Cursor data) {
@@ -107,20 +77,5 @@ public class WearableNotifier implements GoogleApiClient.ConnectionCallbacks, Go
     private boolean shouldNotify(Cursor data) {
         return apiClient != null
                 && data.moveToFirst();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.d(TAG, "Connnected.");
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d(TAG, "Connection suspended: " + i);
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "OnConnectionFailed()");
     }
 }

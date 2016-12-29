@@ -34,13 +34,21 @@ import android.widget.ProgressBar;
 
 import com.example.android.sunshine.common.data.SunshinePreferences;
 import com.example.android.sunshine.common.data.WeatherContract;
+import com.example.android.sunshine.common.utilities.LogHelper;
 import com.example.android.sunshine.sync.SunshineSyncUtils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.Wearable;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>,
-        ForecastAdapter.ForecastAdapterOnClickHandler {
+        ForecastAdapter.ForecastAdapterOnClickHandler, GoogleApiClient.ConnectionCallbacks, DataApi.DataListener, GoogleApiClient.OnConnectionFailedListener {
 
-    private final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = LogHelper.LOG_TAG(MainActivity.class);
 
     /*
      * The columns of data that we are interested in displaying within our MainActivity's list of
@@ -80,10 +88,19 @@ public class MainActivity extends AppCompatActivity implements
     private ProgressBar mLoadingIndicator;
     private WearableNotifier wearableNotifier;
 
+    private GoogleApiClient googleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Wearable.API)
+                .enableAutoManage(this, this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+
         setContentView(R.layout.activity_forecast);
         getSupportActionBar().setElevation(0f);
 
@@ -154,22 +171,18 @@ public class MainActivity extends AppCompatActivity implements
         getSupportLoaderManager().initLoader(ID_FORECAST_LOADER, null, this);
 
         SunshineSyncUtils.initialize(this);
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        wearableNotifier = WearableNotifier.createForCallingActivity(this);
+        wearableNotifier = WearableNotifier.createWithApiClient(googleApiClient);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (wearableNotifier != null) {
-            wearableNotifier.disconnect();
-            wearableNotifier = null;
-        }
+        Wearable.DataApi.removeListener(googleApiClient, this);
     }
 
     /**
@@ -359,5 +372,42 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.d(TAG, "Google-Api Client connected.");
+        Wearable.DataApi.addListener(googleApiClient, this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "Google-Api Client suspended connection on: '" + i + "'.");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.w(TAG, "Connection to Google-Api Client failed: '" + connectionResult.getErrorMessage() + "'.");
+    }
+
+    @Override
+    public void onDataChanged(DataEventBuffer dataEventBuffer) {
+        Log.d(TAG, "Received data changed event.");
+        for (DataEvent currentEvent : dataEventBuffer) {
+            if (currentEvent.getType() == DataEvent.TYPE_CHANGED) {
+                DataItem item = currentEvent.getDataItem();
+                if (item.getUri().getEncodedPath().equals("/weather-update")) {
+                    Log.d(TAG, "Handling weather-update event.");
+                    String[] projection = {
+                            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
+                            WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
+                            WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
+                            WeatherContract.WeatherEntry.COLUMN_DATE
+                    };
+                    Cursor weatherCursor = getContentResolver().query(WeatherContract.WeatherEntry.CONTENT_URI, projection, WeatherContract.WeatherEntry.getSqlSelectForTodayOnwards(), null, null);
+                    wearableNotifier.notifyFromWeatherCursorData(weatherCursor);
+                }
+            }
+        }
     }
 }
