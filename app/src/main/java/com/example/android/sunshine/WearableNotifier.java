@@ -17,7 +17,6 @@ import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
-import java.util.Date;
 
 /**
  * Created by Jan-2 on 27.12.2016.
